@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
+  creationTimestamp: "2021-03-24T13:32:47Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:cert-manager.io/cluster-issuer: {}
+      f:spec:
+        f:ingressClassName: {}
+        f:rules: {}
+        f:tls: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2021-03-24T13:32:47Z"
+  name: customer
+  namespace: default
+  resourceVersion: "1491"
+  uid: a00052df-249b-47b4-ac64-4a858f3c32d0
+spec:
+  ingressClassName: default
+  rules:
+  - host: hayba.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: customer
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - hayba.com
+    secretName: hayba-secret
+status:
+  loadBalancer: {}

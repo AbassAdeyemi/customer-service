@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>11</java.version>
 		<wavefront.version>2.1.0</wavefront.version>
+		<spring-native.version>0.9.0</spring-native.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,8 +45,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.experimental</groupId>
-			<artifactId>spring-graalvm-native</artifactId>
-			<version>LATEST</version>
+			<artifactId>spring-native</artifactId>
+			<version>${spring-native.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.wavefront</groupId>
@@ -77,13 +78,6 @@
 	</dependency>
 	</dependencies>
 	</dependencyManagement>
-	<repositories>
-		<repository>
-			<id>spring-milestone</id>
-			<name>Spring milestone</name>
-			<url>https://repo.spring.io/milestone</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<plugins>
@@ -95,18 +89,41 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<image>
-						<builder>paketobuildpacks/builder:tiny</builder>
-						<env>
-							<BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
-								--enable-url-protocols=https
-							</BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>
-							<BP_BOOT_NATIVE_IMAGE>true</BP_BOOT_NATIVE_IMAGE>
-						</env>
-					</image>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+					<!--<image>-->
+						<!--<builder>paketobuildpacks/builder:tiny</builder>-->
+						<!--&lt;!&ndash;<env>&ndash;&gt;-->
+							<!--&lt;!&ndash;<BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>&ndash;&gt;-->
+								<!--&lt;!&ndash;&#45;&#45;enable-url-protocols=https&ndash;&gt;-->
+							<!--&lt;!&ndash;</BP_BOOT_NATIVE_IMAGE_BUILD_ARGUMENTS>&ndash;&gt;-->
+							<!--&lt;!&ndash;<BP_BOOT_NATIVE_IMAGE>true</BP_BOOT_NATIVE_IMAGE>&ndash;&gt;-->
+						<!--&lt;!&ndash;</env>&ndash;&gt;-->
+					<!--</image>-->
+					<imageName>
+						abassadey/customer-service
+					</imageName>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>spring-releases</id>
+			<name>Spring Releases</name>
+			<url>https://repo.spring.io/release</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-releases</id>
+			<name>Spring Releases</name>
+			<url>https://repo.spring.io/release</url>
+		</pluginRepository>
+	</pluginRepositories>
 
 </project>
